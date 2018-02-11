@@ -1,0 +1,175 @@
+<meta charset="utf-8">
+<style>
+    body{
+        padding: 2% 10% 2% 10%;
+    }
+    .title{
+        font-family:Georgia,serif;
+        color:#4E443C;
+        font-size: 20px;
+        font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+    }
+    h4{
+        font-family:Georgia,serif;
+        color:#4E443C;
+        margin-bottom: 10px;
+        font-size: 16px;
+        font-variant: small-caps; text-transform: none; font-weight: 100;
+    }
+    .index{
+        font-size: 10px;
+        font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+        font-variant: normal;
+    }
+    .enunciado{
+        text-align: justify;
+        font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+        font-size: 14px;
+        margin-top: .5em; color: #666;
+    }
+    .center{
+        text-align: center;
+        margin-top: 10px;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+    }
+    .item{
+        width:100%;
+    }
+    .row{
+        flex-direction: row;
+        display: flex;
+    }
+    .explanation{
+        height:100%; 
+        width:50%;
+    }
+    .example{
+        position: relative;
+        top:10px;
+        color: #666;
+        font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+        left: 40%;
+        font-size: 20px;
+    }
+    .step-1-rec{
+        position:relative;
+        left:20%;
+    }
+    #max-1-rec{
+        top: 30px;
+        margin:0;
+    }
+    #min-1-rec{
+        margin:0;
+        top: 70px;
+    }
+</style>
+<script type="text/javascript" src="http://www.hostmath.com/Math/MathJax.js?config=OK"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<body>
+    <div class="title center">
+        <h2>Introduction to Dynamic Programming</h2>
+    </div>
+    <div class="container">
+        <div class="item">
+            <div class="enunciado">Array A contains the elements, A<span class="index">1</span>,A<span class="index">2</span>...A<span class="index">N</span>.
+                And array B contains the elements, B<span class="index">1</span>,B<span class="index">2</span>...B<span class="index">N</span>.
+                There is a relationship between A<span class="index">i</span> and B<span class="index">i</span>, ∀ 1 ≤ i ≤ N, i.e.,
+                    any element A<span class="index">i</span> lies between 1 and B<span class="index">i</span>.<br><br>           
+                    Let the cost S of an array A be defined as: 
+            <span style="color:#4e443c;">\[ S = \sum_2^n \mid A\scriptsize{ i} - \small{A} \scriptsize{i} \small\mid\]</span>
+            <br>
+            You have to print the largest possible value of S.</div>
+            <br>
+        </div>
+        <div class="item row">
+            <div class="explanation">
+                <h4>Recursive Approach</h4>
+                <span class="enunciado">The recursive approach is very simple, but is a really bad one. However, it is a nice example to introduce you to Dynamic Programming.
+                We can take a recursive approach to calculate all possibilities and then get the greatest sum possible. 
+                </span>
+            </div>
+
+            <div id="animation-recursive" class="explanation">
+                <!--<span class="example">55 68 31 80</span>
+                <p class="step-1-rec" id="max-1-rec">55</p>
+                <p class="step-1-rec" id="min-1-rec">1</p>-->
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    nodes = [
+        {'data': '0'},
+        {'data': '55'},
+        {'data': '1'},
+        {'data': '68'},
+        {'data': '1'},
+        {'data': '31'},
+        {'data': '1'},
+        {'data': '80'},
+        {'data': '1'}
+    ]
+
+    svg = d3.select("#animation-recursive")
+            .append("svg")
+            .attr("height", "100%")
+            .attr("width", "100%")
+            .style("background-color", "white");
+    
+    width = document.getElementById("animation-recursive").offsetWidth;
+    height = document.getElementById("animation-recursive").offsetHeight;
+    depth = 5
+    make_tree(depth);
+    show_tree();
+
+    function show_tree(){
+        d3.selectAll(".rec_ani")
+          .transition()
+          .delay(function(d, i){ return 150*i})
+          .style("visibility", "visible")
+          .duration(200)
+    }
+
+    function make_tree(depth){
+        for(var i = 1; i <= depth; i+= 1){
+        var position = true;
+        for(var j = 1; j <= Math.pow(2,i); j+=2){
+            circle = svg.append("circle")
+                        .attr("class", "rec_ani")
+                        .attr("cx", j*width/Math.pow(2,i))
+                        .attr("cy", (i)*height/(depth+1))
+                        .attr("r", 5)
+                        .attr("fill", "#4E443C")
+                        .style("visibility", "hidden");
+
+            if(position == true){
+                x2 = (j+1)*width/Math.pow(2,i);
+            }
+            else{
+                x2 = (j-1)*width/Math.pow(2,i);
+            }
+            
+            if(i-1 != 0){
+                svg.append("line")
+                .attr("class", "rec_ani")
+               .attr("x1", circle.attr("cx"))
+               .attr("y1", circle.attr("cy"))
+               .attr("x2", x2)
+               .attr("y2", (i-1)*height/(depth+1))
+               .attr("stroke-width", 1)
+               .attr("stroke", "#4E443C")
+               .style("visibility", "hidden");
+            }
+               
+            position = !position;
+        }
+    }
+    }
+
+</script>
