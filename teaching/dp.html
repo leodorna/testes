@@ -67,6 +67,23 @@
         margin:0;
         top: 70px;
     }
+    .code-line0{
+        margin-bottom: 0;
+        margin-top: 10;
+        font-size: 12px;
+    }
+    .code-line1{
+        margin-bottom: 0;
+        margin-top: 1;
+        padding-left: 20px;
+        font-size: 12px;
+    }
+    .code-line2{
+        margin-bottom: 0;
+        margin-top: 1;
+        padding-left:40px;
+        font-size: 12px;
+    }
 </style>
 <script type="text/javascript" src="http://www.hostmath.com/Math/MathJax.js?config=OK"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -90,18 +107,29 @@
         <div class="item row">
             <div class="explanation">
                 <h4>Recursive Approach</h4>
-                <span class="enunciado">The recursive approach is very simple, but is a really bad one. However, it is a nice example to introduce you to Dynamic Programming.
-                We can take a recursive approach to calculate all possibilities and then get the greatest sum possible. 
+                <span class="enunciado">
+                        The recursive approach is very simple, but is a really bad one. However, i think it 
+                        is important to show why Dynamic Programming is important and what kind of problems 
+                        we can apply it.<br>
+                        Basically, it tries to  calculate all possibilities and then get the greatest sum possible.
+                        Since we want to maximize the difference between neighboors, A<span class="index">i</span> must be 1 or B<span class="index">i</span>.
+                        Thus we have two possible numbers for each A<span class="index">i</span>, and consequently
+                        2^n different vectors to choose from.<br>
+                        We have an example of recursive solution to this above: <br>
+                        <p class="code-line0"><code><strong>function</strong> find_max_sum(a, i){</code></p>
+                            <p class="code-line1"><code>if(i == n-1)</code></p>
+                            <p class="code-line2"><code><strong>return</strong> max(abs(1-a), abs(b[i]-a));</code></p>
+                            <p class="code-line1"><code>else</code></p>
+                            <p class="code-line2"><code><strong>return</strong> a + max(find_max_sum(b[i], i+1), find_max_sum(1, i+1));</code></p>
+                        <p class="code-line0"><code>}</code></p>
                 </span>
             </div>
-
-            <div id="animation-recursive" class="explanation">
-                <!--<span class="example">55 68 31 80</span>
-                <p class="step-1-rec" id="max-1-rec">55</p>
-                <p class="step-1-rec" id="min-1-rec">1</p>-->
-            </div>
+            <div id="animation-recursive" class="explanation"></div>
         </div>
-
+        <div class="item row">
+            <div class="explanation">
+                    <h4>Solving Little Problems</h4>
+        </div>
     </div>
 </body>
 <script>
@@ -135,6 +163,23 @@
           .delay(function(d, i){ return 150*i})
           .style("visibility", "visible")
           .duration(200)
+          .on("end", function(d, i){
+              if(i == 60){
+                  hide_tree();
+              }
+          })
+    }
+
+    function hide_tree(){
+        d3.selectAll(".rec_ani")
+          .transition()
+          .delay(400)
+          .style("visibility", "hidden")
+          .duration(150)
+          .on("end", function (d, i){
+              if(i == 60)
+                show_tree();
+          })
     }
 
     function make_tree(depth){
