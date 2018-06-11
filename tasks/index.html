@@ -1,0 +1,45 @@
+<meta charset="utf-8">
+
+<script src="js/d3/d3.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<head>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="container" class="row">
+        <div id="first-row" class="column">
+                <div id="stack-graph" class="data-view">
+        
+                </div>
+        
+                <div class="data-view" class="column">
+                    <select id="dia">
+                        <option value="0">Domingo</option>
+                        <option value="1">Segunda</option>
+                        <option value="2">Terça</option>
+                        <option value="3">Quarta</option>
+                        <option value="4">Quinta</option>
+                        <option value="5">Sexta</option>
+                        <option value="6">Sábado</option>
+                    </select>
+                    <div class="slider-box">
+                        <p>Work</p>
+                        <input type="range" min="0" max="12" value="0" class="slider" id="work">
+                    </div>
+                    <div class="slider-box">
+                        <p>Study</p>
+                        <input type="range" min="0" max="12" value="0" class="slider" id="study">
+                    </div>
+                    
+                </div>
+        </div>
+        <div id="second-row" class="column">
+
+        </div>
+        
+    </div>
+</body>
+
+
+<script src="js/functions.js"></script>
+<script src="js/main.js"></script>

@@ -1,0 +1,12 @@
+{
+    "keys": ["procrast","work", "study"],
+    "data": [
+        {"work": 4, "study": 1},
+        {"work": 2, "study": 3},
+        {"work": 2, "study": 5},
+        {"work": 4, "study": 1},
+        {"work": 5, "study": 0},
+        {"work": 3, "study": 2},
+        {"work": 4, "study": 1}
+    ]
+}
