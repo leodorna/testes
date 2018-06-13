@@ -120,3 +120,59 @@ function update_stacked_area(parameters, new_data){
            })
 
 }
+//testando pra bolsa
+function create_bar_chart(div, json){
+    var width  = $(div).width();
+    var height = $(div).height();
+
+    var max_value;
+    var min_value;
+
+    var color = "#ccc";
+
+    json.each(function(d, i){
+        if(i != 0){
+            if(d.value > max_value){
+                max_value = d.value
+            } else if(d.value < min_value) {
+                min_value = d.value;
+            }
+        } else {
+            max_value = d.value;
+            min_value = d.value;
+        }
+    })
+
+    var x = d3.scaleBand()
+              .rangeRound([0, width])
+              .padding(0.1)
+              .domain(d3.keys(json));
+
+    var y = d3.scaleLinear()
+              .rangeRound([height, 0])
+              .domain([min_value, max_value]);
+
+    var svg = d3.select(div)
+                .append("svg")
+                .append("g")
+                .attr("class", "bar-chart")
+                .attr("width", width)
+                .attr("height", height);
+
+
+    var rect = svg.selectAll("rect")
+                  .data(json)
+                  .enter()
+                  .append("rect")
+                  .attr("x", function(d){
+                      return x(d.ano);
+                  })
+                  .attr("y", function(d){
+                      return y(d.value)
+                  })
+                  .attr("width", x.bandwidth())
+                  .attr("height", function(d){
+                      return height - y(d.value)
+                  })
+                  .style("fill", color)
+}

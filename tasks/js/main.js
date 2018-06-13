@@ -29,7 +29,7 @@ json = {
 
 
 stacked_area = create_stacked_area(stack_svg, json)
-
+create_bar_chart("#histogram", json_bars)
 d3.selectAll(".slider").on("change", function(d){
     index = $("#dia").val()
     type  = $(this).prop("id")
